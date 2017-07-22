@@ -1,0 +1,11 @@
+﻿@model  IEnumerable<Chat.Models.ChatRoomMessageViewModel>
+<table id="conversationTab">
+@foreach (var item in Model)
+{
+    <tr>
+        <td>@item.Message.Time</td>
+        <td>@item.Message.Owner</td>
+        <td>@item.Message.Message</td>
+    </tr>
+}
+</table>

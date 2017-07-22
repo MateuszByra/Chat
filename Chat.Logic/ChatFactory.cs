@@ -19,12 +19,26 @@ namespace Chat.Common
         {
             get
             {
-                if(chatRoomsLabelsList == null)
+                if (chatRoomsLabelsList == null)
                 {
                     chatRoomsLabelsList = new ChatRoomsLabelsList();
-                    chatRoomsLabelsList.SetStartupChatRoomsLabelsList(GetPredefinedRooms().Select(x=>x.Label).ToList());
+                    chatRoomsLabelsList.SetStartupChatRoomsLabelsList(GetPredefinedRooms().Select(x => x.Label).ToList());
                 }
                 return chatRoomsLabelsList;
+            }
+        }
+
+        private static List<IChatRoom> chatRooms;
+        public static List<IChatRoom> ChatRoomsList
+        {
+            get
+            {
+                if (chatRooms == null)
+                {
+                    chatRooms = new List<IChatRoom>();
+                    chatRooms.AddRange(GetPredefinedRooms());
+                }
+                return chatRooms;
             }
         }
 
@@ -57,7 +71,7 @@ namespace Chat.Common
 
         public static IChatRoomLogic CreateChatRoomLogic()
         {
-            return chatRoomLogic ?? (chatRoomLogic = new ChatRoomLogic() { GetChatRoomsFunc = GetPredefinedRooms });
+            return chatRoomLogic ?? (chatRoomLogic = new ChatRoomLogic() { GetChatRoomsFunc = () => ChatRoomsList });
         }
         #endregion
     }

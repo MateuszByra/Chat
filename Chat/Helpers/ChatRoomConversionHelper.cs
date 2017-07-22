@@ -26,7 +26,7 @@ namespace Chat.Helpers
             {
                 result.Add(new ChatRoomMessageViewModel() { GetMessageFunc = () => message });
             }
-            return result;
+            return result.OrderBy(x=>x.Message.Time).ToList();
         }
     }
 }

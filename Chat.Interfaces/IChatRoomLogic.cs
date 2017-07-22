@@ -12,5 +12,6 @@ namespace Chat.Interfaces
         bool Exists(string roomName);
         IEnumerable<IChatRoomLabel> GetChatRoomsLabels();
         IChatRoom GetChatRoom(int id);
+        void SaveMessage(int roomId, string owner, string message);
     }
 }

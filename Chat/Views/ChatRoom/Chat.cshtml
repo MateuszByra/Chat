@@ -6,14 +6,20 @@
 
 <h2>Chat</h2>
 <div class="container">
-    <table>
+    <div id="messages">
+        @Html.Partial("MessagesTable", Model)
+    </div>
+
+    @*<table id="conversationTab">
         @foreach (var item in Model)
         {
             <tr>
-                <td>@item.Message.Time</td><td>@item.Message.Owner</td><td>@item.Message.Message</td>
+                <td>@item.Message.Time</td>
+                <td>@item.Message.Owner</td>
+                <td>@item.Message.Message</td>
             </tr>
         }
-    </table>
+    </table>*@
     <input type="text" id="message" />
     <input type="button" id="sendmessage" value="Send" />
     <input type="hidden" id="displayname" />
@@ -36,10 +42,21 @@
                 // Add the message to the page.
                 $('#discussion').append('<li><strong>' + htmlEncode(name)
                     + '</strong>: ' + htmlEncode(message) + '</li>');
+
+                $.ajax({
+                    async: true,
+                    method: "GET",
+                    url: "/ChatRoom/GetChatRoomMessagesTable",
+                }
+                ).done(function (partialViewResult) {
+                    console.log(partialViewResult);
+                    $("#messages").html(partialViewResult);
+                    });
+            
             };
             // Get the user name and store it to prepend to messages.
             //$('#displayname').val(prompt('Enter your name:', ''));
-            
+
 
             // Set initial focus to message input box.
             $('#message').focus();
@@ -47,7 +64,9 @@
             $.connection.hub.start().done(function () {
                 $('#sendmessage').click(function () {
                     // Call the Send method on the hub.
-                    chat.server.send($('#displayname').val(), $('#message').val());
+                    var message = $('#message').val();
+                    chat.server.send($('#displayname').val(), message);
+                    SaveMessage(message)
                     // Clear text box and reset focus for next comment.
                     $('#message').val('').focus();
                 });
@@ -57,6 +76,18 @@
         function htmlEncode(value) {
             var encodedValue = $('<div />').text(value).html();
             return encodedValue;
+        }
+
+        function SaveMessage(message) {
+            $('#message').val()
+
+            $.ajax({
+                async: true,
+                method: "POST",
+                url: "/ChatRoom/SaveMessage",
+                data: { message: message }
+            }
+            );
         }
     </script>
 }

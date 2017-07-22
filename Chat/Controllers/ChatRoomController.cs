@@ -58,5 +58,22 @@ namespace Chat.Controllers
             var result = ChatRoomConversionHelper.ChatRoomMessagesToViewModel(room.Messages);
             return View(result);
         }
+
+        [HttpPost]
+        public void SaveMessage(string message)
+        {
+            int id;
+            int.TryParse(Request.UrlReferrer.Segments.Last().ToString(), out id);
+            chatRoomLogic.SaveMessage(id, Session["name"] as string, message);
+        }
+
+        [HttpGet]
+        public ActionResult GetChatRoomMessagesTable()
+        {
+            int chatRoomId;
+            int.TryParse(Request.UrlReferrer.Segments.Last().ToString(), out chatRoomId);
+            var messages = ChatRoomConversionHelper.ChatRoomMessagesToViewModel(chatRoomLogic.GetChatRoom(chatRoomId).Messages);
+            return PartialView("~/Views/Shared/MessagesTable.cshtml", messages);
+        }
     }
 }
