@@ -1,12 +1,13 @@
-﻿@{
+﻿@model Chat.Models.LoginName
+@{
     ViewBag.Title = "Home Page";
 }
 
 <div>
     @using (Html.BeginForm("StartDialog", "Chat", FormMethod.Post))
     {
-        @Html.TextBox("Name", "", new { id = "name" , required="required"})
-        <span class="error">This login already exists.</span>
+        @Html.TextBoxFor(model => model.Name, new { id = "name"});
+        @Html.ValidationMessageFor(model => model.Name);
         <input type="submit" value="Next" id="btnNext" />
     }
 </div>
@@ -16,7 +17,7 @@
         $(".error").hide();
 
         $("#btnNext").on("click", function (e) {
-            e.preventDefault();
+           // e.preventDefault();
             var name = $("#name").val();
 
             $.ajax({
@@ -37,6 +38,5 @@
 
             console.log(name);
         });
-
     </script>
 }

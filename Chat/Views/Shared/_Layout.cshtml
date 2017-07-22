@@ -38,5 +38,11 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+    @Scripts.Render("~/Scripts/jquery.validate.js")
+    @Scripts.Render("~/Scripts/jquery.validate.unobtrusive.js")
+
+    @{Html.EnableClientValidation(true);}
+    @{Html.EnableUnobtrusiveJavaScript(true);}
 </body>
 </html>
