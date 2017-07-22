@@ -9,28 +9,12 @@ namespace Chat.Controllers
 {
     public class HomeController : Controller
     {
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")] //by history back dzialalo poprawnie
         public ActionResult Index()
         {
+            if (Session["name"] != null)//jeśli użytkownik jest już zalogowany
+                return RedirectToAction("Index", "Chat");
             return View(new LoginName());
-        }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-
-        public ActionResult Chat()
-        {
-            return View();
         }
     }
 }
