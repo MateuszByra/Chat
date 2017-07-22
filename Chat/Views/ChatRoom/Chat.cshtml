@@ -5,6 +5,7 @@
 }
 
 <h2>Chat</h2>
+@Html.ActionLink("Exit from room", "ChatRoomsList", "ChatRoom")
 <div class="container">
     <div id="messages">
         @Html.Partial("MessagesTable", Model)

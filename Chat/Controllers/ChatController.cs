@@ -19,7 +19,6 @@ namespace Chat.Controllers
             this.namesLogic = ChatFactory.CreateNamesLogic();//namesLogic;
         }
 
-        [HttpPost]
         public ActionResult GoToRoomsList(string name)
         {
             if (namesLogic.Add(name))
