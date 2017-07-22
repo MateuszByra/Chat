@@ -19,13 +19,6 @@ namespace Chat.Controllers
             this.namesLogic = ChatFactory.CreateNamesLogic();//namesLogic;
         }
 
-        //public ActionResult Index()
-        //{
-        //    if (Session["name"] == null)//jesli użytkownik nie ma przypisanego loginu
-        //        return RedirectToStartPage();
-        //    return View();
-        //}
-
         [HttpPost]
         public ActionResult GoToRoomsList(string name)
         {

@@ -27,7 +27,7 @@ namespace Chat.Controllers
 
         public ActionResult ChatRoomsList()
         {
-            var labels = ChatRoomLabelConversionHelper.ChatRoomLabelsToViewModel(chatRoomLogic.GetChatRoomsLabels());
+            var labels = ChatRoomConversionHelper.ChatRoomLabelsToViewModel(chatRoomLogic.GetChatRoomsLabels());
             return View(labels);
         }
 
@@ -50,7 +50,13 @@ namespace Chat.Controllers
 
         public ActionResult Chat(int id)
         {
-            return View();
+            var room = chatRoomLogic.GetChatRoom(id);
+            if (room == null)
+            {
+                return Redirect("/Home/index");
+            }
+            var result = ChatRoomConversionHelper.ChatRoomMessagesToViewModel(room.Messages);
+            return View(result);
         }
     }
 }

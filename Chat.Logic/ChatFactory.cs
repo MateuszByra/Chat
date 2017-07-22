@@ -3,6 +3,7 @@ using Chat.Data.ChatRoom;
 using Chat.Interfaces;
 using Chat.Logic;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Chat.Common
 {
@@ -21,18 +22,27 @@ namespace Chat.Common
                 if(chatRoomsLabelsList == null)
                 {
                     chatRoomsLabelsList = new ChatRoomsLabelsList();
-                    chatRoomsLabelsList.SetStartupChatRoomsLabelsList(GetPredefinedLabels());
+                    chatRoomsLabelsList.SetStartupChatRoomsLabelsList(GetPredefinedRooms().Select(x=>x.Label).ToList());
                 }
                 return chatRoomsLabelsList;
             }
         }
 
-        private static List<IChatRoomLabel> GetPredefinedLabels()
+        //private static List<IChatRoomLabel> GetPredefinedLabels()
+        //{
+        //    var roomsLabels = new List<IChatRoomLabel>();
+        //    roomsLabels.Add(new ChatRoomLabel() { Id = 1, Name = "First room", Owner = "First owner" });
+        //    roomsLabels.Add(new ChatRoomLabel() { Id = 2, Name = "Second room", Owner = "Second owner" });
+        //    return roomsLabels;
+        //}
+
+        private static List<IChatRoom> GetPredefinedRooms()
         {
-            var roomsLabels = new List<IChatRoomLabel>();
-            roomsLabels.Add(new ChatRoomLabel() { Id = 1, Name = "First room", Owner = "First owner" });
-            roomsLabels.Add(new ChatRoomLabel() { Id = 2, Name = "Second room", Owner = "Second owner" });
-            return roomsLabels;
+            var rooms = new List<IChatRoom>();
+            rooms.Add(new ChatRoom() { Label = new ChatRoomLabel() { Id = 1, Name = "First room", Owner = "First owner" } });
+            rooms.Add(new ChatRoom() { Label = new ChatRoomLabel() { Id = 2, Name = "Second room", Owner = "Second owner" } });
+            return rooms;
+
         }
 
         #region logiki
@@ -47,7 +57,7 @@ namespace Chat.Common
 
         public static IChatRoomLogic CreateChatRoomLogic()
         {
-            return chatRoomLogic ?? (chatRoomLogic = new ChatRoomLogic() { GetChatRoomsLabelsFunc = () => ChatRoomsLabelsList });
+            return chatRoomLogic ?? (chatRoomLogic = new ChatRoomLogic() { GetChatRoomsFunc = GetPredefinedRooms });
         }
         #endregion
     }

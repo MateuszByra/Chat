@@ -40,8 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IChatRoom.cs" />
     <Compile Include="IChatRoomLabel.cs" />
     <Compile Include="IChatRoomLogic.cs" />
+    <Compile Include="IChatRoomMessage.cs" />
     <Compile Include="INamesLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

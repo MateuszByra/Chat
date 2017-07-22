@@ -1,4 +1,4 @@
-﻿
+﻿@model  IEnumerable<Chat.Models.ChatRoomMessageViewModel>
 @{
     ViewBag.Title = "Chat";
     Layout = "~/Views/Shared/_ChatLayout.cshtml";
@@ -6,6 +6,14 @@
 
 <h2>Chat</h2>
 <div class="container">
+    <table>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Message.Time</td><td>@item.Message.Owner</td><td>@item.Message.Message</td>
+            </tr>
+        }
+    </table>
     <input type="text" id="message" />
     <input type="button" id="sendmessage" value="Send" />
     <input type="hidden" id="displayname" />

@@ -42,6 +42,8 @@
   <ItemGroup>
     <Compile Include="ChatRoom\ChatRoom.cs" />
     <Compile Include="ChatRoom\ChatRoomLabel.cs" />
+    <Compile Include="ChatRoom\ChatRoomMessage.cs" />
+    <Compile Include="ChatRoom\ChatRoomsList.cs" />
     <Compile Include="ChatRoom\ChatRoomsLabelsList.cs" />
     <Compile Include="NamesList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

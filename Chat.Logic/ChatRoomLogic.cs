@@ -13,8 +13,15 @@ namespace Chat.Logic
         /// <summary>
         /// Zwraca aktualną listę etykiet pokoi.
         /// </summary>
-        public Func<ChatRoomsLabelsList> GetChatRoomsLabelsFunc;
+       // public Func<ChatRoomsLabelsList> GetChatRoomsLabelsFunc;
 
+        public Func<List<IChatRoom>> GetChatRoomsFunc;
+        /// <summary>
+        /// Dodanie nowego pokoju do listy
+        /// </summary>
+        /// <param name="roomName"></param>
+        /// <param name="owner"></param>
+        /// <returns></returns>
         public bool Add(string roomName, string owner)
         {
             if (string.IsNullOrEmpty(roomName) || string.IsNullOrEmpty(owner) || Exists(roomName))
@@ -22,7 +29,8 @@ namespace Chat.Logic
                 return false;
             }
 
-            GetChatRoomsLabelsFunc().Add(CreateChatRoomLabel(roomName, owner));
+            //GetChatRoomsLabelsFunc().Add(CreateChatRoomLabel(roomName, owner));
+            GetChatRoomsFunc().Add(CreateChatRoom(roomName, owner));
             return true;
         }
 
@@ -31,20 +39,69 @@ namespace Chat.Logic
             return GetChatRoomsLabels().Any(x => x.Name.Equals(roomName, StringComparison.CurrentCultureIgnoreCase));
         }
 
+        /// <summary>
+        /// Pobiera wszystkie etykiety pokoi
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<IChatRoomLabel> GetChatRoomsLabels()
         {
-            if (GetChatRoomsLabelsFunc == null)
-            {
-                throw new InvalidOperationException("Brak ustawionego fun GetChatRoomsLabelsFunc");
-            }
-            return GetChatRoomsLabelsFunc().OrderBy(x=>x.Id);
+            //{
+            //    if (GetChatRoomsLabelsFunc == null)
+            //    {
+            //        throw new InvalidOperationException("Brak ustawionego fun GetChatRoomsLabelsFunc");
+            //    }
+            //    return GetChatRoomsLabelsFunc().OrderBy(x => x.Id);
+            return GetChatRooms().Select(x => x.Label);
         }
 
+        /// <summary>
+        /// Tworzy etykietę chatu
+        /// </summary>
+        /// <param name="roomName"></param>
+        /// <param name="owner"></param>
+        /// <returns></returns>
         private IChatRoomLabel CreateChatRoomLabel(string roomName, string owner)
         {
             var list = GetChatRoomsLabels().ToList();
             var id = list.Count + 1;
             return new ChatRoomLabel() { Id = id, Name = roomName, Owner = owner };
+        }
+
+        private IChatRoom CreateChatRoom(string roomName, string owner)
+        {
+            return new ChatRoom() { Label = CreateChatRoomLabel(roomName, owner) };
+        }
+
+        /// <summary>
+        /// Pobiera chat
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="login"></param>
+        /// <returns></returns>
+        public IChatRoom GetChatRoom(int id)
+        {
+            return GetChatRooms().FirstOrDefault(x => x.Label.Id == id);
+        }
+
+        /// <summary>
+        /// Zapisuje wiadomość do czatu
+        /// </summary>
+        /// <param name="roomId"></param>
+        /// <param name="owner"></param>
+        /// <param name="message"></param>
+        public void SaveMessage(int roomId, string owner, string message)
+        {
+            var room = GetChatRooms().FirstOrDefault(x => x.Label.Id == roomId);
+            room.Messages.Add(new ChatRoomMessage() { Owner = owner, Message = message, Time = DateTime.Now });
+        }
+
+        private List<IChatRoom> GetChatRooms()
+        {
+            if (GetChatRoomsFunc == null)
+            {
+                throw new InvalidOperationException("Func GetChatRoomsFunc nie jest ustawiony.");
+            }
+            return GetChatRoomsFunc();
         }
     }
 }
