@@ -47,5 +47,10 @@ namespace Chat.Controllers
             }
             return false;
         }
+
+        public ActionResult Chat(int id)
+        {
+            return View();
+        }
     }
 }

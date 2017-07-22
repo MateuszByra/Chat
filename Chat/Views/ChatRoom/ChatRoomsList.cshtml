@@ -25,7 +25,7 @@
     {
         <tr>
             <td>@item.Label.Id</td>
-            <td>@item.Label.Name</td>
+            <td>@Html.ActionLink(item.Label.Name, "Chat", new { id = item.Label.Id })</td>
             <td>@item.Label.Owner</td>
         </tr>
     }
