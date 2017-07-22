@@ -8,6 +8,7 @@
     {
         @Html.TextBoxFor(model => model.Name, new { id = "name"});
         @Html.ValidationMessageFor(model => model.Name);
+        <span class="error">This login already exists.</span>
         <input type="submit" value="Next" id="btnNext" />
     }
 </div>
@@ -35,8 +36,6 @@
                     console.log(error);
                 }
             });
-
-            console.log(name);
         });
     </script>
 }

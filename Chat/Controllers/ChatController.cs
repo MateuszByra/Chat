@@ -36,7 +36,7 @@ namespace Chat.Controllers
         [HttpPost]
         public bool ValidateName(string name)
         {
-            if (ModelState.IsValid)
+            if (!string.IsNullOrEmpty(name))
             {
                 return NamesValidator.Exists(name);
             }
