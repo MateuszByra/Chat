@@ -52,5 +52,16 @@ namespace Chat.Controllers
         {
             return RedirectToAction("Index", "Home");
         }
+
+        public ActionResult LogOut()
+        {
+            var name = Session["name"] as string;
+            if (name != null)
+            {
+                namesLogic.Remove(name);
+                Session.Remove("name");
+            }
+            return RedirectToStartPage();
+        }
     }
 }

@@ -26,5 +26,10 @@ namespace Chat.Logic
         {
             return GetNamesList().Exists(x=>x.Equals(name,StringComparison.CurrentCultureIgnoreCase));
         }
+
+        public void Remove(string name)
+        {
+            GetNamesList().Remove(name);
+        }
     }
 }

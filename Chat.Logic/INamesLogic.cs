@@ -10,5 +10,6 @@ namespace Chat.Logic
     {
         bool Add(string name);
         bool Exists(string name);
+        void Remove(string name);
     }
 }
