@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Home Page";
 }
-
+<h1>Set login</h1>
 <div>
     @using (Html.BeginForm("StartDialog", "Chat", FormMethod.Post))
     {
@@ -18,21 +18,22 @@
         $(".error").hide();
 
         $("#btnNext").on("click", function (e) {
-           // e.preventDefault();
             var name = $("#name").val();
-
             $.ajax({
+                async: false,
                 method: "POST",
                 url: "/Chat/ValidateName",
                 data: { name: name },
                 success: function (response) {
-                    if (response === true)
+                    if (response == "True") {
+                        e.preventDefault();
                         $(".error").show();
-
+                        console.log("istnieje");
+                    }  
+                    else
                     $(".error").hide();
-                    console.log(response);
                 },
-                error: function (response) {
+                error: function (error) {
                     console.log(error);
                 }
             });

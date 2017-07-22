@@ -14,23 +14,25 @@ namespace Chat.Controllers
 
         public ChatController()
         {
-
-        }
-
-        public ChatController(INamesLogic namesLogic)
-        {
             this.namesLogic = ChatFactory.CreateNamesLogic();//namesLogic;
         }
 
-        // GET: Chat
-        public void StartDialog(string name)
+        public ActionResult Index()
+        {
+            if (Session["name"] == null)//jesli użytkownik nie ma przypisanego loginu
+                return RedirectToStartPage();
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult StartDialog(string name)
         {
             if (namesLogic.Add(name))
             {
                 Session["name"] = name;
-                Response.Redirect("Index");
+                return Redirect("Index");
             }
-            RedirectToStartPage();
+            return RedirectToStartPage();
         }
 
         [HttpPost]
@@ -38,24 +40,17 @@ namespace Chat.Controllers
         {
             if (!string.IsNullOrEmpty(name))
             {
-                return NamesValidator.Exists(name);
+                return namesLogic.Exists(name);
             }
             return false;
-        }
-
-        public ActionResult Index()
-        {
-            if (Session["name"] == null)//jesli użytkownik nie ma przypisanego loginu
-                RedirectToStartPage();
-            return View();
         }
 
         /// <summary>
         /// Przekierowanie na stronę startową aplikacji.
         /// </summary>
-        private void RedirectToStartPage()
+        private ActionResult RedirectToStartPage()
         {
-            Response.Redirect("/Home/Index");
+            return RedirectToAction("Index", "Home");
         }
     }
 }
