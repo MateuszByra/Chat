@@ -1,4 +1,6 @@
 ﻿using Chat.Common;
+using Chat.Helpers;
+using Chat.Interfaces;
 using Chat.Logic;
 using System;
 using System.Collections.Generic;
@@ -17,25 +19,25 @@ namespace Chat.Controllers
             this.namesLogic = ChatFactory.CreateNamesLogic();//namesLogic;
         }
 
-        public ActionResult Index()
-        {
-            if (Session["name"] == null)//jesli użytkownik nie ma przypisanego loginu
-                return RedirectToStartPage();
-            return View();
-        }
+        //public ActionResult Index()
+        //{
+        //    if (Session["name"] == null)//jesli użytkownik nie ma przypisanego loginu
+        //        return RedirectToStartPage();
+        //    return View();
+        //}
 
         [HttpPost]
-        public ActionResult StartDialog(string name)
+        public ActionResult GoToRoomsList(string name)
         {
             if (namesLogic.Add(name))
             {
                 Session["name"] = name;
-                return Redirect("Index");
+                return RedirectToAction("ChatRoomsList", "ChatRoom");
             }
             return RedirectToStartPage();
         }
 
-        [HttpPost]
+        [HttpGet]
         public bool ValidateName(string name)
         {
             if (!string.IsNullOrEmpty(name))

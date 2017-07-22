@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C50FCCCE-08BD-4179-9B30-EDDA4406592F}</ProjectGuid>
+    <ProjectGuid>{4BA96A4D-5F32-4E03-89AC-F67FDB5EC88D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Chat.Logic</RootNamespace>
-    <AssemblyName>Chat.Logic</AssemblyName>
+    <RootNamespace>Chat.Data</RootNamespace>
+    <AssemblyName>Chat.Data</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,17 +40,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ChatFactory.cs" />
-    <Compile Include="ChatRoomLogic.cs" />
-    <Compile Include="NamesLogic.cs" />
-    <Compile Include="NamesValidator.cs" />
+    <Compile Include="ChatRoom\ChatRoom.cs" />
+    <Compile Include="ChatRoom\ChatRoomLabel.cs" />
+    <Compile Include="ChatRoom\ChatRoomsLabelsList.cs" />
+    <Compile Include="NamesList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Chat.Data\Chat.Data.csproj">
-      <Project>{4BA96A4D-5F32-4E03-89AC-F67FDB5EC88D}</Project>
-      <Name>Chat.Data</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Chat.Interfaces\Chat.Interfaces.csproj">
       <Project>{B57AEBBF-65F9-4A35-BF23-71A5A6455B51}</Project>
       <Name>Chat.Interfaces</Name>

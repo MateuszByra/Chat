@@ -1,9 +1,6 @@
-﻿using Chat.Common;
+﻿using Chat.Data;
+using Chat.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Chat.Logic
 {
@@ -12,11 +9,11 @@ namespace Chat.Logic
         /// <summary>
         /// Zwraca aktualną listę nazw użytkowników.
         /// </summary>
-        public Func<NamesList> GetNamesList;
+        public Func<NamesList> GetNamesListFunc;
 
         public bool Add(string name)
         {
-            if (Exists(name))
+            if (string.IsNullOrEmpty(name) || Exists(name))
                 return false;
             GetNamesList().Add(name);
             return true;
@@ -30,6 +27,15 @@ namespace Chat.Logic
         public void Remove(string name)
         {
             GetNamesList().Remove(name);
+        }
+
+        private NamesList GetNamesList()
+        {
+            if (GetNamesListFunc == null)
+            {
+                throw new InvalidOperationException("Brak ustawionego fun GetChatRoomsLabelsFunc");
+            }
+            return GetNamesListFunc();
         }
     }
 }

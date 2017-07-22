@@ -1,0 +1,65 @@
+﻿@model Chat.Models.ChatRoomLabelViewModelList
+@{
+    ViewBag.Title = "ChatRoomsList";
+    Layout = "~/Views/Shared/_ChatLayout.cshtml";
+}
+
+<h2>ChatRoomsList</h2>
+<div>
+    <span>New room:</span>
+    <div>
+        @using (Html.BeginForm("NewRoom", "ChatRoom", FormMethod.Post))
+        {
+            @Html.ValidationSummary()
+            <label>Name: </label>
+            @Html.TextBox("roomName", "", new { required = "required" });
+
+            <span class="error">This login already exists.</span>
+            <input type="submit" value="Add" id="btnAdd" />
+        }
+    </div>
+
+</div>
+<table>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Label.Id</td>
+            <td>@item.Label.Name</td>
+            <td>@item.Label.Owner</td>
+        </tr>
+    }
+</table>
+
+
+@section scripts{
+<script type="text/javascript">
+
+    $(".error").hide();
+
+    $("#btnAdd").on("click", function (e) {
+        var name = $("#name").val();
+        $.ajax({
+            async: false,
+            method: "GET",
+            url: "/ChatRoom/ValidateRoom",
+            data: { name: name },
+            success: function (response) {
+                if (response == "True") {
+                    e.preventDefault();
+                    $(".error").show();
+                    console.log("istnieje");
+                }
+                else
+                    $(".error").hide();
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    });
+</script>
+}
+
+
+

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Chat.Logic
+namespace Chat.Interfaces
 {
     public interface INamesLogic
     {

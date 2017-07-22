@@ -4,9 +4,9 @@
 }
 <h1>Set login</h1>
 <div>
-    @using (Html.BeginForm("StartDialog", "Chat", FormMethod.Post))
+    @using (Html.BeginForm("GoToRoomsList", "Chat", FormMethod.Post))
     {
-        @Html.TextBoxFor(model => model.Name, new { id = "name"});
+        @Html.TextBoxFor(model => model.Name, new { id = "name", required="required"});
         @Html.ValidationMessageFor(model => model.Name);
         <span class="error">This login already exists.</span>
         <input type="submit" value="Next" id="btnNext" />
@@ -21,7 +21,7 @@
             var name = $("#name").val();
             $.ajax({
                 async: false,
-                method: "POST",
+                method: "GET",
                 url: "/Chat/ValidateName",
                 data: { name: name },
                 success: function (response) {
