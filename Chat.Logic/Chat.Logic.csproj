@@ -43,7 +43,6 @@
     <Compile Include="ChatFactory.cs" />
     <Compile Include="ChatRoomLogic.cs" />
     <Compile Include="NamesLogic.cs" />
-    <Compile Include="NamesValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
