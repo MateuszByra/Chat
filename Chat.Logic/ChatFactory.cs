@@ -42,14 +42,6 @@ namespace Chat.Common
             }
         }
 
-        //private static List<IChatRoomLabel> GetPredefinedLabels()
-        //{
-        //    var roomsLabels = new List<IChatRoomLabel>();
-        //    roomsLabels.Add(new ChatRoomLabel() { Id = 1, Name = "First room", Owner = "First owner" });
-        //    roomsLabels.Add(new ChatRoomLabel() { Id = 2, Name = "Second room", Owner = "Second owner" });
-        //    return roomsLabels;
-        //}
-
         private static List<IChatRoom> GetPredefinedRooms()
         {
             var rooms = new List<IChatRoom>();

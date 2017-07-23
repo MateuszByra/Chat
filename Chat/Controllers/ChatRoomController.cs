@@ -43,7 +43,7 @@ namespace Chat.Controllers
             
             chatRoomLogic.Add(roomName, GetLoginName());
             Response.StatusCode = (int)HttpStatusCode.OK;
-            return "OK";//Json(new { success = true, message=string.Empty });
+            return "OK";
         }
 
         public bool RoomExists(string roomName)
@@ -63,7 +63,6 @@ namespace Chat.Controllers
             {
                 return Redirect("/Home/index");
             }
-            //chatRoomLogic.SetVisited(true, id);
             var result = ChatRoomConversionHelper.ChatRoomMessagesToViewModel(room.Messages);
             return View(result);
         }
@@ -74,7 +73,6 @@ namespace Chat.Controllers
             int id;
             int.TryParse(Request.UrlReferrer.Segments.Last().ToString(), out id);
             chatRoomLogic.SaveMessage(id, GetLoginName(), message);
-            //chatRoomLogic.SetVisited(false,id);
         }
 
         [HttpGet]

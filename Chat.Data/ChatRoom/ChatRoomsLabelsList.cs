@@ -12,16 +12,9 @@ namespace Chat.Data.ChatRoom
     /// </summary>
     public class ChatRoomsLabelsList : List<IChatRoomLabel>
     {
-        //private List<IChatRoomLabel> roomsLabels;
-
-        //public ChatRoomsLabelsList()
-        //{
-        //    roomsLabels = new List<IChatRoomLabel>();
-        //}
 
         public void SetStartupChatRoomsLabelsList(List<IChatRoomLabel> startupLabels)
         {
-            //roomsLabels = startupLabels;
             this.AddRange(startupLabels);
         }
     }
