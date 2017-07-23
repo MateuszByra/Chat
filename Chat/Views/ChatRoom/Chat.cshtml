@@ -5,15 +5,17 @@
 }
 
 <h2>Chat</h2>
-@Html.ActionLink("Exit", "ChatRoomsList", "ChatRoom")
 <div class="container">
-    <div id="messages">
+    @Html.ActionLink("Exit", "ChatRoomsList", "ChatRoom")
+    <div id="chatMessages">
         @Html.Partial("MessagesTable", Model)
     </div>
 
-    <input type="text" id="message" />
-    <input type="button" id="sendmessage" value="Send" />
-    <input type="hidden" id="displayname" />
+    <div class="form">
+        <input type="text" id="message" />
+        <input type="button" id="sendmessage" value="Send" class="btn"/>
+        <input type="hidden" id="displayname"/>
+    </div>
 </div>
 @section scripts {
     <!--Script references. -->
@@ -40,7 +42,7 @@
                 }
                 ).done(function (partialViewResult) {
                     console.log(partialViewResult);
-                    $("#messages").html(partialViewResult);
+                    $("#chatMessages").html(partialViewResult);
                     });
             
             };

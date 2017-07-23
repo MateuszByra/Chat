@@ -23,10 +23,123 @@ textarea {
     max-width: 280px;
 }
 
-.error{
-    color:red;
+h2 {
+    font-weight: 400;
 }
 
-.room-label.not-visited{
-    border:1px solid green;
+.error, .field-validation-error {
+    color: red;
+    display:block;
+}
+
+.room-label.not-visited {
+    background-color: lightskyblue;
+    display: block;
+    position: relative;
+}
+
+.room-label.not-visited td:last-of-type:before{
+    content:'New \A message!';
+    position:absolute;
+    color:white;
+    line-height:0;
+}
+
+.container.body-content {
+    width: calc(100% /3);
+    height: 600px;
+    background-color: rgba(158, 158, 158, 0.75);
+    display: block;
+    margin: auto;
+    border-radius: 10px;
+    border: 1px solid black;
+}
+
+#logout {
+    text-align: right;
+    padding: 20px;
+}
+
+.container.body-content > div:last-of-type {
+    height: 460px;
+}
+
+footer {
+    padding: 0 0 0 15px;
+}
+
+#rooms, #chatMessages {
+    height: 340px;
+    margin-top: 10px;
+}
+
+#chatMessages{
+    margin-bottom: 10px;
+}
+
+table {
+    display:block;
+    overflow-y: scroll;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(255, 193, 7, 0.66);
+    border: 1px solid #ff8a00;
+    border-collapse: collapse;
+    max-height: 340px;
+}
+
+table tbody{
+    display:inherit;
+    height:inherit;
+}
+
+table tr {
+    display: block;
+    padding: 15px 3px;
+}
+
+table td{
+    height: 20px;
+}
+
+table tr.room-table td:last-of-type{
+    width:80px;
+}
+table tr:not(:last-child) {
+    border-bottom: 1px solid #ff8a00;
+}
+
+tr.room-label .room-id {
+    padding:0 8px;
+}
+
+tr.room-label .room-id:after{
+    content:'.';
+}
+
+tr.room-label td:not(.room-id){
+    width:calc(100% / 3);
+}
+
+a {
+    color: #2231ff;
+}
+
+.form input[type="text"]{
+    height: 28px;
+}
+
+.form .btn {
+    padding: 8px 25px;
+}
+
+table#conversationTab tr td:not(:last-of-type) {
+    font-size: 0.7em;
+    color: rgb(255, 0, 0);
+}
+
+
+table#conversationTab tr td:last-of-type {
+    font-size: 1em;
+    padding-left: 10px;
 }

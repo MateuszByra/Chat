@@ -4,13 +4,13 @@
     Layout = "~/Views/Shared/_ChatLayout.cshtml";
 }
 
-<h2>ChatRoomsList</h2>
+<h2>Chat rooms</h2>
 <div>
     <span>New room:</span>
-    <div>
+    <div class="form">
         <span class="error"></span>
         @Html.TextBox("roomName", "", new { required = "required" })
-        <input type="button" value="Add" id="btnAdd" />
+        <input type="button" value="Add" id="btnAdd" class="btn" />
     </div>
 
 </div>

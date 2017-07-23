@@ -55,6 +55,7 @@ namespace Chat.Controllers
             return false;
         }
 
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")] //by history back dzialalo poprawnie
         public ActionResult Chat(int id)
         {
             var room = chatRoomLogic.GetChatRoom(id, GetLoginName());

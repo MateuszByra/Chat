@@ -8,15 +8,17 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    @if (Session["name"] != null)
-    {
-        <div>
-            <span>Witaj @Session["name"]</span>
-            @Html.ActionLink("LogOut","LogOut","Chat")
-        </div>
-    }
     <div class="container body-content">
-        @RenderBody()
+        @if (Session["name"] != null)
+        {
+            <div id="logout">
+                <span>Welcome @Session["name"]</span>
+                @Html.ActionLink("LogOut", "LogOut", "Chat")
+            </div>
+        }
+        <div>
+            @RenderBody()
+        </div>
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - My ASP.NET Chat Application</p>
