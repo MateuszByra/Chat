@@ -5,7 +5,7 @@
 }
 
 <h2>Chat</h2>
-@Html.ActionLink("Exit from room", "ChatRoomsList", "ChatRoom")
+@Html.ActionLink("Exit", "ChatRoomsList", "ChatRoom")
 <div class="container">
     <div id="messages">
         @Html.Partial("MessagesTable", Model)
@@ -24,7 +24,7 @@
     <input type="text" id="message" />
     <input type="button" id="sendmessage" value="Send" />
     <input type="hidden" id="displayname" />
-    <ul id="discussion"></ul>
+    @*<ul id="discussion"></ul>*@
 </div>
 @section scripts {
     <!--Script references. -->
@@ -41,8 +41,8 @@
             // Create a function that the hub can call back to display messages.
             chat.client.addNewMessageToPage = function (name, message) {
                 // Add the message to the page.
-                $('#discussion').append('<li><strong>' + htmlEncode(name)
-                    + '</strong>: ' + htmlEncode(message) + '</li>');
+                //$('#discussion').append('<li><strong>' + htmlEncode(name)
+                //    + '</strong>: ' + htmlEncode(message) + '</li>');
 
                 $.ajax({
                     async: true,
@@ -74,10 +74,10 @@
             });
         });
         // This optional function html-encodes messages for display in the page.
-        function htmlEncode(value) {
-            var encodedValue = $('<div />').text(value).html();
-            return encodedValue;
-        }
+        //function htmlEncode(value) {
+        //    var encodedValue = $('<div />').text(value).html();
+        //    return encodedValue;
+        //}
 
         function SaveMessage(message) {
             $('#message').val()

@@ -32,11 +32,10 @@ namespace Chat.Controllers
         }
 
         [HttpPost]
-        public ActionResult NewRoom(string roomName)
+        public void NewRoom(string roomName)
         {
             var owner = Session["name"] as string;
             chatRoomLogic.Add(roomName, owner);
-            return RedirectToAction("ChatRoomsList");
         }
 
         public bool ValidateRoom(string roomName)
@@ -74,6 +73,13 @@ namespace Chat.Controllers
             int.TryParse(Request.UrlReferrer.Segments.Last().ToString(), out chatRoomId);
             var messages = ChatRoomConversionHelper.ChatRoomMessagesToViewModel(chatRoomLogic.GetChatRoom(chatRoomId).Messages);
             return PartialView("~/Views/Shared/MessagesTable.cshtml", messages);
+        }
+
+        [HttpGet]
+        public ActionResult GetChatRoomsLabelsList()
+        {
+            var labels = ChatRoomConversionHelper.ChatRoomLabelsToViewModel(chatRoomLogic.GetChatRoomsLabels());
+            return View("~/Views/Shared/ChatRoomsLabelsList.cshtml", labels);
         }
     }
 }
