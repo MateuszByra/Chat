@@ -30,7 +30,7 @@ namespace Chat.Logic
 
         public bool Exists(string roomName)
         {
-            return GetChatRooms().Select(x=>x.Label).Any(x => x.Name.Equals(roomName, StringComparison.CurrentCultureIgnoreCase));
+            return GetChatRooms().Select(x => x.Label).Any(x => x.Name.Equals(roomName, StringComparison.CurrentCultureIgnoreCase));
         }
 
         /// <summary>
@@ -70,8 +70,7 @@ namespace Chat.Logic
         {
             var chatRoom = GetChatRooms().FirstOrDefault(x => x.Label.Id == id);
             chatRoom.Label.Visited = true;
-            if(!string.IsNullOrEmpty(requesterName))
-                chatRoom.VisitorsNames.Add(requesterName);
+            chatRoom.VisitorsNames.Add(requesterName);
             return chatRoom;
         }
 
@@ -109,7 +108,7 @@ namespace Chat.Logic
             var room = GetChatRooms().FirstOrDefault(x => x.Label.Id == chatId);
             if (room == null)
                 return false;
-            var visited= !room.Messages.Any() || room.Messages.Last().Owner.Equals(requesterName, StringComparison.CurrentCultureIgnoreCase)
+            var visited = !room.Messages.Any() || room.Messages.Last().Owner.Equals(requesterName, StringComparison.CurrentCultureIgnoreCase)
              || room.VisitorsNames.Contains(requesterName);
             return visited;
         }
