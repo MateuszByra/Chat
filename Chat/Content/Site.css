@@ -143,3 +143,22 @@ table#conversationTab tr td:last-of-type {
     font-size: 1em;
     padding-left: 10px;
 }
+
+@media screen and (max-width: 961px) {
+    .container.body-content{
+        width: calc(100% /2);
+    }
+}
+
+@media screen and (max-width: 655px) {
+    .container.body-content {
+        width: 100%;
+    }
+}
+
+
+@media screen and (max-width: 331px) {
+    .room-label.not-visited td:last-of-type:before {
+        font-size: 0.7em;
+    }
+}
