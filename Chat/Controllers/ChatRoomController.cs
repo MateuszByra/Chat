@@ -4,7 +4,9 @@ using Chat.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 
 namespace Chat.Controllers
@@ -32,13 +34,28 @@ namespace Chat.Controllers
         }
 
         [HttpPost]
-        public void NewRoom(string roomName)
+        public string NewRoom(string roomName)
         {
             var owner = Session["name"] as string;
+
+            if (string.IsNullOrEmpty(roomName))
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                //return Json(new { succcess = false, message = "Room name is required." });
+                return "Room name is required.";
+            }
+            if (RoomExists(roomName))
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return "This name already exists.";//Json(new { success = false, message = "This name already exists.." });
+            }
+            
             chatRoomLogic.Add(roomName, owner);
+            Response.StatusCode = (int)HttpStatusCode.OK;
+            return "OK";//Json(new { success = true, message=string.Empty });
         }
 
-        public bool ValidateRoom(string roomName)
+        public bool RoomExists(string roomName)
         {
             if (!string.IsNullOrEmpty(roomName))
             {
