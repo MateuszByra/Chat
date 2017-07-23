@@ -13,7 +13,7 @@ namespace Chat.Controllers
         public ActionResult Index()
         {
             if (Session["name"] != null)//jeśli użytkownik jest już zalogowany
-                return RedirectToAction("Index", "Chat");
+                return RedirectToAction("ChatRoomsList", "ChatRoom");
             return View(new LoginName());
         }
     }
