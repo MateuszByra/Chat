@@ -2,9 +2,9 @@
 <table>
     @foreach (var item in Model)
     {
-        <tr>
-            <td>@item.Label.Id</td>
-            <td>@Html.ActionLink(item.Label.Name, "Chat", new { id = item.Label.Id })</td>
+        <tr class="room-label">
+            <td class="room-id">@item.Label.Id</td>
+            <td>@Html.ActionLink(item.Label.Name, "Chat", new { id = item.Label.Id})</td>
             <td>@item.Label.Owner</td>
         </tr>
     }

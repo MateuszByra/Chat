@@ -21,5 +21,7 @@ namespace Chat.Data.ChatRoom
         /// Założyciel pokoju
         /// </summary>
         public string Owner { get; set; }
+
+        public bool Visited { get; set; }
     }
 }

@@ -36,7 +36,7 @@ namespace Chat.Logic
 
         public bool Exists(string roomName)
         {
-            return GetChatRoomsLabels().Any(x => x.Name.Equals(roomName, StringComparison.CurrentCultureIgnoreCase));
+            return GetChatRooms().Select(x=>x.Label).Any(x => x.Name.Equals(roomName, StringComparison.CurrentCultureIgnoreCase));
         }
 
         /// <summary>
@@ -45,13 +45,7 @@ namespace Chat.Logic
         /// <returns></returns>
         public IEnumerable<IChatRoomLabel> GetChatRoomsLabels()
         {
-            //{
-            //    if (GetChatRoomsLabelsFunc == null)
-            //    {
-            //        throw new InvalidOperationException("Brak ustawionego fun GetChatRoomsLabelsFunc");
-            //    }
-            //    return GetChatRoomsLabelsFunc().OrderBy(x => x.Id);
-            return GetChatRooms().Select(x => x.Label);
+            return GetChatRooms().Select(x => SetVisited(x).Label);
         }
 
         /// <summary>
@@ -78,9 +72,13 @@ namespace Chat.Logic
         /// <param name="id"></param>
         /// <param name="login"></param>
         /// <returns></returns>
-        public IChatRoom GetChatRoom(int id)
+        public IChatRoom GetChatRoom(int id, string requesterName)
         {
-            return GetChatRooms().FirstOrDefault(x => x.Label.Id == id);
+            var chatRoom = GetChatRooms().FirstOrDefault(x => x.Label.Id == id);
+            chatRoom.Label.Visited = true;
+            chatRoom.VisitorsNames.Add(requesterName);
+            //SetVisited(requesterName, chatRoom);
+            return chatRoom;
         }
 
         /// <summary>
@@ -92,6 +90,7 @@ namespace Chat.Logic
         public void SaveMessage(int roomId, string owner, string message)
         {
             var room = GetChatRooms().FirstOrDefault(x => x.Label.Id == roomId);
+            room.VisitorsNames.RemoveWhere(x => !x.Equals(owner, StringComparison.CurrentCultureIgnoreCase));
             room.Messages.Add(new ChatRoomMessage() { Owner = owner, Message = message, Time = DateTime.Now });
         }
 
@@ -102,6 +101,25 @@ namespace Chat.Logic
                 throw new InvalidOperationException("Func GetChatRoomsFunc nie jest ustawiony.");
             }
             return GetChatRoomsFunc();
+        }
+
+        private IChatRoom SetVisited(IChatRoom room)
+        {
+            room.Label.Visited =
+                !room.Messages.Any();//||
+                //room.Messages.Last().Owner.Equals(requesterName, StringComparison.CurrentCultureIgnoreCase);
+               // || room.VisitorsNames.Contains(requesterName);
+            return room;// GetChatRooms().FirstOrDefault(x => x.Label.Id == roomId).Label.Visited = visited;
+        }
+
+        public bool WasVisitedBy(string requesterName, int chatId)
+        {
+            var room = GetChatRooms().FirstOrDefault(x => x.Label.Id == chatId);
+            if (room == null)
+                return false;
+            var visited= !room.Messages.Any() || room.Messages.Last().Owner.Equals(requesterName, StringComparison.CurrentCultureIgnoreCase)
+             || room.VisitorsNames.Contains(requesterName);
+            return visited;
         }
     }
 }

@@ -10,5 +10,6 @@ namespace Chat.Interfaces
     {
         IChatRoomLabel Label { get; set; }
         List<IChatRoomMessage> Messages { get; set; }
+        HashSet<string> VisitorsNames { get; set; }
     }
 }

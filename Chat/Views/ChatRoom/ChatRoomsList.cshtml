@@ -36,6 +36,7 @@
                 }
                 ).done(function (partialViewResult) {
                     $("#rooms").html(partialViewResult);
+                    CheckVisitedStatus();
                 });
 
             };
@@ -63,6 +64,41 @@
             });
         });
     </script>
+
+<script type="text/javascript">
+        $(function () {
+            CheckVisitedStatus();
+        });
+        function CheckVisitedStatus() {
+            console.log("test");
+            $("td.room-id").each(function () {
+                console.log("pojedyncze");
+                var element = $(this);
+                console.log(element.html());
+                var id = element.html();
+                console.log(id);
+
+                $.ajax({
+                    async: false,
+                    method: "GET",
+                    url: "/ChatRoom/WasVisited",
+                    data: { chatRoomId: id },
+                    success: function (response) {
+                        if (response == "False") {
+                            element.parent().addClass("not-visited");
+                            console.log(element.parent());
+                            console.log("not visited")
+                        } else {
+                            element.parent().removeClass("not-visited");
+                            console.log("visited");
+                        }
+                    },
+                }
+                );
+            });
+        }
+</script>
+
 }
 
 

@@ -21,12 +21,6 @@ namespace Chat.Controllers
             chatRoomLogic = ChatFactory.CreateChatRoomLogic();
         }
 
-        // GET: ChatRoom
-        //public ActionResult Index()
-        //{
-        //    return View();
-        //}
-
         public ActionResult ChatRoomsList()
         {
             var labels = ChatRoomConversionHelper.ChatRoomLabelsToViewModel(chatRoomLogic.GetChatRoomsLabels());
@@ -36,21 +30,18 @@ namespace Chat.Controllers
         [HttpPost]
         public string NewRoom(string roomName)
         {
-            var owner = Session["name"] as string;
-
             if (string.IsNullOrEmpty(roomName))
             {
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                //return Json(new { succcess = false, message = "Room name is required." });
                 return "Room name is required.";
             }
             if (RoomExists(roomName))
             {
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                return "This name already exists.";//Json(new { success = false, message = "This name already exists.." });
+                return "This name already exists.";
             }
             
-            chatRoomLogic.Add(roomName, owner);
+            chatRoomLogic.Add(roomName, GetLoginName());
             Response.StatusCode = (int)HttpStatusCode.OK;
             return "OK";//Json(new { success = true, message=string.Empty });
         }
@@ -66,11 +57,12 @@ namespace Chat.Controllers
 
         public ActionResult Chat(int id)
         {
-            var room = chatRoomLogic.GetChatRoom(id);
+            var room = chatRoomLogic.GetChatRoom(id, GetLoginName());
             if (room == null)
             {
                 return Redirect("/Home/index");
             }
+            //chatRoomLogic.SetVisited(true, id);
             var result = ChatRoomConversionHelper.ChatRoomMessagesToViewModel(room.Messages);
             return View(result);
         }
@@ -80,7 +72,8 @@ namespace Chat.Controllers
         {
             int id;
             int.TryParse(Request.UrlReferrer.Segments.Last().ToString(), out id);
-            chatRoomLogic.SaveMessage(id, Session["name"] as string, message);
+            chatRoomLogic.SaveMessage(id, GetLoginName(), message);
+            //chatRoomLogic.SetVisited(false,id);
         }
 
         [HttpGet]
@@ -88,7 +81,8 @@ namespace Chat.Controllers
         {
             int chatRoomId;
             int.TryParse(Request.UrlReferrer.Segments.Last().ToString(), out chatRoomId);
-            var messages = ChatRoomConversionHelper.ChatRoomMessagesToViewModel(chatRoomLogic.GetChatRoom(chatRoomId).Messages);
+            
+            var messages = ChatRoomConversionHelper.ChatRoomMessagesToViewModel(chatRoomLogic.GetChatRoom(chatRoomId, GetLoginName()).Messages);
             return PartialView("~/Views/Shared/MessagesTable.cshtml", messages);
         }
 
@@ -97,6 +91,24 @@ namespace Chat.Controllers
         {
             var labels = ChatRoomConversionHelper.ChatRoomLabelsToViewModel(chatRoomLogic.GetChatRoomsLabels());
             return View("~/Views/Shared/ChatRoomsLabelsList.cshtml", labels);
+        }
+
+        private string GetLoginName()
+        {
+            return Session["name"] as string;
+        }
+
+        [HttpGet]
+        public bool WasVisited(string chatRoomId)
+        {
+            if (string.IsNullOrEmpty(chatRoomId))
+            {
+                return false;
+            }
+
+            int id;
+            int.TryParse(chatRoomId, out id);
+            return chatRoomLogic.WasVisitedBy(GetLoginName(), id);
         }
     }
 }

@@ -20,5 +20,9 @@ namespace Chat.Interfaces
         /// Założyciel pokoju
         /// </summary>
          string Owner { get; set; }
+        /// <summary>
+        /// Flaga określająca, czy pokój z nową wiadomością został odwiedzony
+        /// </summary>
+        bool Visited { get; set; }
     }
 }

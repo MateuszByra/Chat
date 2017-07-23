@@ -26,3 +26,7 @@ textarea {
 .error{
     color:red;
 }
+
+.room-label.not-visited{
+    border:1px solid green;
+}
