@@ -12,6 +12,7 @@ namespace Chat.Controllers
 {
     public class ChatController : Controller
     {
+        private int cookieExpirationYears = 999;
         private readonly INamesLogic namesLogic;
 
         public ChatController()
@@ -24,7 +25,7 @@ namespace Chat.Controllers
             if (namesLogic.Add(name))
             {
                 Session["name"] = name;
-                Response.Cookies.Add(new HttpCookie("name") { Expires = DateTime.Now.AddDays(1), Value = name });
+                Response.Cookies.Add(new HttpCookie("name") { Expires = DateTime.Now.AddYears(cookieExpirationYears), Value = name });
                 return RedirectToAction("ChatRoomsList", "ChatRoom");
             }
             return RedirectToStartPage();
@@ -55,7 +56,7 @@ namespace Chat.Controllers
             {
                 namesLogic.Remove(name);
                 Session.Abandon();
-                Response.Cookies["name"].Expires = DateTime.Now.AddDays(-1);
+                Response.Cookies["name"].Expires = DateTime.Now.AddYears(-cookieExpirationYears);
                 Response.Cookies["name"].Value = null;
             }
             return RedirectToStartPage();
