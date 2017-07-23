@@ -70,7 +70,8 @@ namespace Chat.Logic
         {
             var chatRoom = GetChatRooms().FirstOrDefault(x => x.Label.Id == id);
             chatRoom.Label.Visited = true;
-            chatRoom.VisitorsNames.Add(requesterName);
+            if(!string.IsNullOrEmpty(requesterName))
+                chatRoom.VisitorsNames.Add(requesterName);
             return chatRoom;
         }
 
