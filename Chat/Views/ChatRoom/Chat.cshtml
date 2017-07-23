@@ -75,5 +75,15 @@
             }
             );
         }
+
+        $('#message').keypress(function (e) {
+            if (e.keyCode == 13) {
+                if ($(this).val() != '') {
+                    $("#sendmessage").trigger("click");
+                } else {
+                    return false;
+                }
+            }
+        });
     </script>
 }

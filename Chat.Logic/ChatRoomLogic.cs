@@ -83,7 +83,7 @@ namespace Chat.Logic
         public void SaveMessage(int roomId, string owner, string message)
         {
             var room = GetChatRooms().FirstOrDefault(x => x.Label.Id == roomId);
-            room.VisitorsNames.RemoveWhere(x => !x.Equals(owner, StringComparison.CurrentCultureIgnoreCase));
+            room.VisitorsNames.RemoveWhere(x => !string.IsNullOrEmpty(x) && !x.Equals(owner, StringComparison.CurrentCultureIgnoreCase));
             room.Messages.Add(new ChatRoomMessage() { Owner = owner, Message = message, Time = DateTime.Now });
         }
 
