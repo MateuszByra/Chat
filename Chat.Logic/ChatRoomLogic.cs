@@ -10,11 +10,6 @@ namespace Chat.Logic
 {
     class ChatRoomLogic : IChatRoomLogic
     {
-        /// <summary>
-        /// Zwraca aktualną listę etykiet pokoi.
-        /// </summary>
-       // public Func<ChatRoomsLabelsList> GetChatRoomsLabelsFunc;
-
         public Func<List<IChatRoom>> GetChatRoomsFunc;
         /// <summary>
         /// Dodanie nowego pokoju do listy
@@ -29,7 +24,6 @@ namespace Chat.Logic
                 return false;
             }
 
-            //GetChatRoomsLabelsFunc().Add(CreateChatRoomLabel(roomName, owner));
             GetChatRoomsFunc().Add(CreateChatRoom(roomName, owner));
             return true;
         }
@@ -77,7 +71,6 @@ namespace Chat.Logic
             var chatRoom = GetChatRooms().FirstOrDefault(x => x.Label.Id == id);
             chatRoom.Label.Visited = true;
             chatRoom.VisitorsNames.Add(requesterName);
-            //SetVisited(requesterName, chatRoom);
             return chatRoom;
         }
 
@@ -106,10 +99,8 @@ namespace Chat.Logic
         private IChatRoom SetVisited(IChatRoom room)
         {
             room.Label.Visited =
-                !room.Messages.Any();//||
-                //room.Messages.Last().Owner.Equals(requesterName, StringComparison.CurrentCultureIgnoreCase);
-               // || room.VisitorsNames.Contains(requesterName);
-            return room;// GetChatRooms().FirstOrDefault(x => x.Label.Id == roomId).Label.Visited = visited;
+                !room.Messages.Any();
+            return room;
         }
 
         public bool WasVisitedBy(string requesterName, int chatId)

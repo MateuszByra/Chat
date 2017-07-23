@@ -11,20 +11,9 @@
         @Html.Partial("MessagesTable", Model)
     </div>
 
-    @*<table id="conversationTab">
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.Message.Time</td>
-                <td>@item.Message.Owner</td>
-                <td>@item.Message.Message</td>
-            </tr>
-        }
-    </table>*@
     <input type="text" id="message" />
     <input type="button" id="sendmessage" value="Send" />
     <input type="hidden" id="displayname" />
-    @*<ul id="discussion"></ul>*@
 </div>
 @section scripts {
     <!--Script references. -->

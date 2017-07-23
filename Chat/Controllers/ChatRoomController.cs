@@ -90,7 +90,7 @@ namespace Chat.Controllers
         public ActionResult GetChatRoomsLabelsList()
         {
             var labels = ChatRoomConversionHelper.ChatRoomLabelsToViewModel(chatRoomLogic.GetChatRoomsLabels());
-            return View("~/Views/Shared/ChatRoomsLabelsList.cshtml", labels);
+            return PartialView("~/Views/Shared/ChatRoomsLabelsList.cshtml", labels);
         }
 
         private string GetLoginName()

@@ -16,7 +16,7 @@ namespace Chat.Controllers
 
         public ChatController()
         {
-            this.namesLogic = ChatFactory.CreateNamesLogic();//namesLogic;
+            this.namesLogic = ChatFactory.CreateNamesLogic();
         }
 
         public ActionResult GoToRoomsList(string name)
