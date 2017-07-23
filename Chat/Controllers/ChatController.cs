@@ -24,6 +24,7 @@ namespace Chat.Controllers
             if (namesLogic.Add(name))
             {
                 Session["name"] = name;
+                Response.Cookies.Add(new HttpCookie("name") { Expires = DateTime.Now.AddDays(1), Value = name });
                 return RedirectToAction("ChatRoomsList", "ChatRoom");
             }
             return RedirectToStartPage();
@@ -53,7 +54,9 @@ namespace Chat.Controllers
             if (name != null)
             {
                 namesLogic.Remove(name);
-                Session.Remove("name");
+                Session.Abandon();
+                Response.Cookies["name"].Expires = DateTime.Now.AddDays(-1);
+                Response.Cookies["name"].Value = null;
             }
             return RedirectToStartPage();
         }
