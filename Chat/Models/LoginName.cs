@@ -8,7 +8,7 @@ namespace Chat.Models
 {
     public class LoginName
     {
-        [Required(ErrorMessage ="Login jest wymagany")]
+        [Required(ErrorMessage ="Login is required.")]
         public string Name { get; set; }
     }
 }
